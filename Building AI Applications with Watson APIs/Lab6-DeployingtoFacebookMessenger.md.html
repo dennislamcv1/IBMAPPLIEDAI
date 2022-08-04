@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css">
+  </head>
+  <body>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/IDSNlogo.png" width="200" height="200">
+    <h3>Lab 6: Deploying to Facebook Messenger (1hr)</h3>
+    <p>Objective for Exercise:</p>
+    <ul>
+      <li>How to integrate the basic chatbot with Facebook Messenger on your Facebook page.</li>
+      <li>How to deploying your Watson-powered chatbot to Facebook Messenger for your business.</li>
+    </ul>
+    <p>
+      Facebook Messenger is a messaging platform that, among personal uses,
+      can help businesses and customers communicate with each other. You can
+      automate the communication with your customers by deploying your
+      Watson-powered chatbot to Facebook Messenger for your business. This
+      way, you'll promptly respond to customer queries even when you are not
+      around.
+    </p>
+    <p><strong>Create a Facebook Page and App</strong></p>
+    <p>
+      We'll need a business page in order to deploy our chatbot to Facebook.
+      So let's get that done right away.
+    </p>
+    <p>
+      1. <strong>Sign up for
+a <a href="https://www.facebook.com/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">Facebook</a> account</strong>. If you already
+      have a Facebook account you can skip this step.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/1.png" width="600">
+    <p>
+      2. <strong>Create a Facebook Page</strong> to host your Watson Assistant Chatbot. To
+      do so, in the top right corner of Facebook, you'll find
+      a <strong>Create</strong> button. Click on it and then select <strong>Page</strong> from the drop
+      down menu that appears.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/2.png" width="600">
+    <p>
+      You are now presented with two categories of pages that you can
+      create, <strong>Business or Brand</strong> and <strong>Community or Public Figure</strong>. Just
+      pick one, as either category is fine for the purpose of this lab.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/3.png" width="600">
+    <p>
+      Now that you created your Facebook page, you'll need to create a
+      Facebook application that will integrate with our chatbot.
+    </p>
+    <p>
+      3. <strong>Create or login in your <a href="https://developers.facebook.com/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">Facebook Developer
+account</a>.</strong> If you don't have
+      an account you can create one by clicking Get Started in the upper right
+      corner of the Facebook for Developers page, as shown in the figure
+      below.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/4.png" width="600">
+    <p>
+      4. Once you have a Facebook Developer account you can <strong>create your
+Facebook App</strong> by clicking on <strong>My Apps</strong> in the top right corner of the
+      webpage.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/5.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/6.png" width="600">
+    <p>
+      5. You'll be asked to fill in the Display Name and the Contact Email,
+      fill the required details and click on Create App ID.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/7.png" width="600">
+    <p>
+      You'll be asked to select a scenario. For our purposes, feel free to
+      skip this step by clicking on the <strong>Skip</strong> button.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/8.png" width="600">
+    <p>
+      6. In order for your Watson chatbot to connect to your Facebook app,
+      you'll need the App Secret for your Facebook app. Click
+      on <strong>Settings</strong> in the sidebar and then select the <strong>Basic</strong> option in
+      the dropdown menu.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/9.png" width="600">
+    <p>From this section, obtain your <strong>App Secret</strong> credentials.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/10.png" width="600">
+    <p>
+      7. Now we need to connect Watson Assistant to our Facebook page. Click
+      on <strong>PRODUCTS</strong> in the sidebar on the left.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/11.png" width="600">
+    <p>Scroll down to the <strong>Add a Product</strong> section. <strong>Click on Set Up under
+the Messenger option</strong> as shown below.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/12.png" width="600">
+    <p>8. In the <strong>Access Tokens</strong> section click on <strong>Add or Remove
+Pages</strong> then click on <strong>Continue</strong>.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/13.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/14.png" width="600">
+    <p>
+      9. <strong>Select the Facebook page</strong> that you want to integrate your app
+      with.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/15.png" width="600">
+    <p>
+      10. <strong>Generate the Page Access Token for your Facebook page.</strong> In
+      the <strong>Access Tokens</strong> section click on <strong>Generate Token</strong>. Then save
+      the <strong>Page Access Token</strong>.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/16.png" width="600">
+    <p>
+      Now that we have the <strong>APP SECRET</strong> and <strong>Page Access Token</strong> for our
+      Facebook app, the next step is to integrate it with Watson Assistant.
+    </p>
+    <p><strong>Integrate your Facebook App with Watson Assistant</strong></p>
+    <p>
+      1. Launch your Watson Assistant instance and click on the Assistants
+      section. When there, <strong>select the Student Advisor Chatbot.</strong>
+    </p>
+    <p>
+      2. <strong>Click on the Add Integrations button</strong> on the right side of the
+      page.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/17.png" width="600">
+    <p>Then select Facebook Messenger.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/18.png" width="600">
+    <p>
+      3. <strong>Paste the APP SECRET credentials of your Facebook App</strong> into the
+      Application secret box.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/19.png" width="600">
+    <p>4. Proceed to Step 2 on the page, and <strong>paste the Page Access Token
+from your Facebook app</strong> in the <strong>Page access token</strong> box.</p>
+    <p>And then save the <strong>Generate verify token</strong>.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/20.png" width="600">
+    <p>5. Proceed to Step 3. There, <strong>click on Generate callback URL and save
+your callback URL.</strong></p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/21.png" width="600">
+    <p>
+      6. Go back to the page for your Facebook App, if you closed it you can
+      find it again from <a href="https://developers.facebook.com/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">this link</a>.
+    </p>
+    <p>
+      7. In the left sidebar, under the <strong>PRODUCTS</strong> section click
+      on <strong>Settings</strong>. Then under the <strong>Webhooks</strong> section <strong>click on Add
+Callback URL.</strong>
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/22.png" width="600">
+    <p>
+      8. Paste the <strong>callback URL</strong> and <strong>Verify Token</strong> from your Watson
+      Assistant. Then click <strong>Verify and Save</strong>
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/23.png" width="600">
+    <p>
+      9. Then click on <strong>Add
+Subscription</strong> and select <strong>messages</strong> and <strong>messaging_postbacks</strong>. Then
+      click save.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/24.png" width="600">
+    <p>
+      10. Congratulations, your Watson Assistant chatbot is now integrated
+      with Facebook Messenger.
+    </p>
+    <p>
+      In the meantime, you can <strong>test your chatbot app</strong> on Messenger, go to
+      the page for your Facebook app, click on <strong>Roles</strong> in the sidebar on the
+      right. Then you add can add testers that can communicate with your
+      chatbot during this testing phase.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/25.png" width="600">
+    <p>
+      Go head and test your chatbot on the Facebook Page you designated. Bear
+      in mind that your chatbot app is not public yet. Only testers get to
+      have access to your chatbot. Please refer to <a href="https://developers.facebook.com/docs/messenger-platform/app-review/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">these instructions from
+Facebook</a> should
+      you want to make your app public.
+    </p>
+    <p>
+      Please note that Facebook Messenger <strong>does not support embedding
+arbitrary HTML</strong>. So if a chatbot deployment target includes Facebook
+      Messenger, it might make sense to simply have a link in your responses
+      instead of the HTML code for said link (e.g., &#x3C;a
+      href="...">...&#x3C;/a>).
+    </p>
+    <h2>Author(s)</h2>
+    <p><a href="https://www.linkedin.com/in/antoniocangiano/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">Antonio Cangiano</a></p>
+    <h2>Changelog</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Version</th>
+          <th>Changed by</th>
+          <th>Change Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2020-08-27</td>
+          <td>2.0</td>
+          <td>Anamika</td>
+          <td>Migrated Lab to Markdown and added to course repo in GitLab</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2></h2>
+    <h3 align="center">© IBM Corporation 2020. All rights reserved.</h3>
+    <h3></h3>
+    <script>window.addEventListener('load', function() {
+snFaculty.inject();
+});</script>
+    <script src="https://skills-network-assets.s3.us.cloud-object-storage.appdomain.cloud/scripts/inject.43989f87.js"></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+  </body>
+</html>

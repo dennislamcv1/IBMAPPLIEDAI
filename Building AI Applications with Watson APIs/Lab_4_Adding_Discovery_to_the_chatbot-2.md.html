@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css">
+  </head>
+  <body>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/IDSNlogo.png" width="300">
+    <h1>Lab 4: Adding Discovery to the Chatbot: Part-2</h1>
+    <h3>Objective:</h3>
+    <ul>
+      <li>How to use IBM Cloud Functions to make programmatic calls from dialog node.</li>
+      <li>Learn about IBM functions.</li>
+    </ul>
+    <p><strong>Pre-requisite:</strong></p>
+    <p>You should have completed the previous lab-<strong>Adding Discovery to the Chatbot:Part-1</strong> succsesfully. If not, then please consider doing the previous lab first before moving further with this lab.</p>
+    <p>In the previous lab you defined an action. At the end of this lab, your chatbot will be able to call a cloud Function to receive a response from Watson Discovery and present course recommendations to the user.</p>
+    <ol>
+      <li>Log in to <a href="https://cloud.ibm.com/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">IBM Cloud</a> and then search for <strong>Functions</strong> in the search bar. Select Functions. After the page is loaded, <strong>make sure the top right hand side shows the name of your organization_lab4</strong>. If your organization is <a href="https://mailto:abcd@gmail.com/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">abcd@gmail.com</a>, then you should see the following, &#x3C;<a href="mailto:abcd@gmail.com_lab4">abcd@gmail.com_lab4</a>>. Click <strong>Actions</strong>.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/28.png" width="600">
+    <ol start="2">
+      <li>Click connectDiscovery action under lab4 package.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/29.png" width="600">
+    <ol start="3">
+      <li>Click <strong>Endpoints</strong> on the left sidebar.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/30.png" width="600">
+    <ol start="4">
+      <li>Click <strong>copy Icon</strong> to copy the URL for the action and make a copy of the REST API URL. Next, click <strong>API-KEY</strong> under REST API.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/31.png" width="600">
+    <ol start="5">
+      <li><strong>Click on the eye icon</strong> to obtain your <strong>CF-based API key</strong> and make a copy of the credentials.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/32.png" width="600">
+    <p>You're now all set to begin integrating this function with Watson Assistant.</p>
+    <h2>Integrate Discovery with our Chatbot</h2>
+    <ol>
+      <li>From your Dashboard, click on the <strong>Watson Assistant service</strong> you created in Lab 3. (Click on the name, not the icon next to it.) and then click <strong>Launch Watson Assistant</strong>.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/33.png" width="600">
+    <ol start="2">
+      <li>Under <strong>Skills</strong> tab, click <strong>Student Advisor</strong> skill. Then, click the <strong>Options</strong> tab.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/34.png" width="600">
+    <ol start="3">
+      <li>Click <strong>Webhooks</strong>. In the <strong>URL</strong> field, specify the <strong>REST API URL</strong> for the action. Append a <strong>?blocking=true</strong> parameter to the action URL to force a synchronous call to be made (e.g. <a href="https://eu-gb.functions.cloud.ibm.com/api/v1/namespaces/YOUR-ORG_YOUR-SPACE/actions/lab4/connectDiscovery?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01&#x26;blocking=true" target="_blank" rel="external">https://eu-gb.functions.cloud.ibm.com/api/v1/namespaces/YOUR-ORG_YOUR-SPACE/actions/lab4/connectDiscovery?blocking=true</a>). Finally, click <strong>Add authorization</strong>.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/35.png" width="600">
+    <ol start="4">
+      <li>We'll use the <strong>CF-based API key</strong> you obtained from action endpoints. The part before the <strong>colon(:)</strong> is your <strong>User name</strong>. Copy this to the User name field. Similarly, the part after the colon(:) is your <strong>password</strong>. (e.g. Your action API key = User name:password). Finally <strong>save</strong>.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/36.png" width="600">
+    <ol start="5">
+      <li>Find <strong>Courses</strong> node under the <strong>Dialog</strong> tab. Click the <strong>3 dots icon</strong> in the Courses node and click <strong>Add child node</strong>. Then, name the new node (e.g., Discovery).</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/37.png" width="600">
+    <ol start="6">
+      <li>Click the <strong>Courses node</strong> and then click <strong>Customize</strong> to customize the node.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/38.png" width="600">
+    <ol start="7">
+      <li>Scroll down to the <em><strong>Webhooks</strong></em> section, and switch the toggle to <strong>On</strong>, and then click <strong>Apply</strong>.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/39.png" width="600">
+    <ol start="8">
+      <li>Now, we will add a parameter, input as a key and <code>"&#x3C;?input.text?>"</code> as a value.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/40.png" width="600">
+    <ol start="9">
+      <li>Scroll down and set the Return variable to <strong>webhook_result_1</strong>.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/41.png" width="600">
+    <ol start="10">
+      <li>Scroll down and under And <strong>Then assistant should</strong>, select <strong>Jump to option</strong> and select the child node you created and then select If <strong>assistant recognizes</strong>(condition).</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/new_4.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/43.png" width="600">
+    <ol start="11">
+      <li>Put <strong>true</strong> as a condition for the node, as we always want to execute it when giving course recommendations. Add the following sample response, which retrieves a list of relevant courses from Discovery via the Function we defined earlier on.</li>
+    </ol>
+    <pre><code class="hljs language-stylus">Here are some courses I found <span class="hljs-keyword">for</span> you! &#x3C;/br> 
+&#x3C;<span class="hljs-selector-tag">a</span> href=<span class="hljs-string">'&#x3C;? $webhook_result_1.response.result.courses.get(0).link ?>'</span> target=<span class="hljs-string">"_blank"</span>>&#x3C;? <span class="hljs-variable">$webhook_result_1</span><span class="hljs-selector-class">.response</span><span class="hljs-selector-class">.result</span><span class="hljs-selector-class">.courses</span><span class="hljs-selector-class">.get</span>(<span class="hljs-number">0</span>)<span class="hljs-selector-class">.name</span> ?>&#x3C;/a> &#x3C;? <span class="hljs-variable">$webhook_result_1</span><span class="hljs-selector-class">.response</span><span class="hljs-selector-class">.result</span><span class="hljs-selector-class">.courses</span><span class="hljs-selector-class">.get</span>(<span class="hljs-number">0</span>)<span class="hljs-selector-class">.description</span> ?> &#x3C;/br> &#x3C;<span class="hljs-selector-tag">a</span> href=<span class="hljs-string">'&#x3C;? $webhook_result_1.response.result.courses.get(1).link ?>'</span> target=<span class="hljs-string">"_blank"</span>>&#x3C;? <span class="hljs-variable">$webhook_result_1</span><span class="hljs-selector-class">.response</span><span class="hljs-selector-class">.result</span><span class="hljs-selector-class">.courses</span><span class="hljs-selector-class">.get</span>(<span class="hljs-number">1</span>)<span class="hljs-selector-class">.name</span> ?>&#x3C;/a> &#x3C;? <span class="hljs-variable">$webhook_result_1</span><span class="hljs-selector-class">.response</span><span class="hljs-selector-class">.result</span><span class="hljs-selector-class">.courses</span><span class="hljs-selector-class">.get</span>(<span class="hljs-number">1</span>)<span class="hljs-selector-class">.description</span> ?>  &#x3C;/br> &#x3C;<span class="hljs-selector-tag">a</span> href=<span class="hljs-string">'&#x3C;? $webhook_result_1.response.result.courses.get(2).link ?>'</span> target=<span class="hljs-string">"_blank"</span>>&#x3C;? <span class="hljs-variable">$webhook_result_1</span><span class="hljs-selector-class">.response</span><span class="hljs-selector-class">.result</span><span class="hljs-selector-class">.courses</span><span class="hljs-selector-class">.get</span>(<span class="hljs-number">2</span>)<span class="hljs-selector-class">.name</span> ?>&#x3C;/a> &#x3C;? <span class="hljs-variable">$webhook_result_1</span><span class="hljs-selector-class">.response</span><span class="hljs-selector-class">.result</span><span class="hljs-selector-class">.courses</span><span class="hljs-selector-class">.get</span>(<span class="hljs-number">2</span>)<span class="hljs-selector-class">.description</span> ?> 
+
+</code></pre>
+    <p></p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/44.png" width="600">
+    <ol start="12">
+      <li>Now you're all set. Try running <strong>Recommend me a course on databases</strong> in <strong>Try it out panel</strong> to confirm that the node works as expected. If you see a result similar to the image below, you are all set for this lab.</li>
+    </ol>
+    <p>To recap, we created a Cloud Function that connects to our Discovery collection and retrieves documents relevant to the user query. We then invoke that function from the relevant node, when people express the intent of receiving a course recommendation. The result is then displayed to the user in our response.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/45.png" width="600">
+    <p>In short, we managed to dynamically invoke results rather than hardcoding the responses. This is a very powerful and flexible approach. You'll use it again when working on the capstone project.</p>
+    <h2>Author(s)</h2>
+    <p><a href="https://www.linkedin.com/in/antoniocangiano/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">Antonio Cangiano</a></p>
+    <h2>Changelog</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Version</th>
+          <th>Changed by</th>
+          <th>Change Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2020-09-16</td>
+          <td>2.0</td>
+          <td>Shubham</td>
+          <td>Migrated Lab to Markdown and added to course repo in GitLab</td>
+        </tr>
+        <tr>
+          <td>2020-09-16</td>
+          <td>2.1</td>
+          <td>Anamika</td>
+          <td>Updated Instructions</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2></h2>
+    <h3 align="center">© IBM Corporation 2020. All rights reserved.</h3>
+    <h3></h3>
+    <script>window.addEventListener('load', function() {
+snFaculty.inject();
+});</script>
+    <script src="https://skills-network-assets.s3.us.cloud-object-storage.appdomain.cloud/scripts/inject.43989f87.js"></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+  </body>
+</html>

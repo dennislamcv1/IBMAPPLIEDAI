@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css">
+  </head>
+  <body>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/IDSNlogo.png" width="300">
+    <h1>Lab 5: Adding Speech Services</h1>
+    <p>
+      Objective for Exercise:
+      The idea behind this lab is to show you how to interface with different Watson services, specifically leveraging the Python SDK. Before we begin, create a new Speech to Text service, and Translator from within IBM Cloud.
+    </p>
+    <h3>Prerequisites:</h3>
+    <ol>
+      <li>Watson Assistant with the sample Customer Service Skill JSON loaded.</li>
+      <li>Speech To Text Service</li>
+      <li>Text To Speech Service</li>
+    </ol>
+    <h3>Project Scenario</h3>
+    <p>You are an AI specialist and you are entrusted with the responsibility of building a voice enabled chatbot. You are building amarkey viable product to see the feasibility. In this product:</p>
+    <ul>
+      <li>
+        <p>We will be posting a query to the chatbot through an audio file (mp3/wav).</p>
+      </li>
+      <li>
+        <p>This audio will then be converted to text by the SpeechToText service.</p>
+      </li>
+      <li>
+        <p>The text returned by the SpeechToText service will be passed to the Watson Assistant.</p>
+      </li>
+      <li>
+        <p>The response from Watson Assistant is in the form of a JSON</p>
+      </li>
+      <li>
+        <p>We extract the text from the JSON and the convert that into speech</p>
+      </li>
+      <li>
+        <p>The speech is rendered to the client through an embedded audio tag</p>
+      </li>
+      <li>
+        <p>The dialog can be continuous as we create a session with Watson Assistant and maintain it.</p>
+      </li>
+    </ul>
+    <h3>Task 1: Add Customer Care skill on Watson Assistant:</h3>
+    <ol>
+      <li>
+        <p>On your Watson Assistant page, click on <strong>Create Assistant</strong></p>
+        <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/1Create_Assistant.png" style="border: solid 1px grey">
+      </li>
+      <li>
+        <p>On the Create Assistant page, add a name to your assistant, like <strong>Customer Care Assistant</strong></p>
+        <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/2CustomerCare.PNG" style="border: solid 1px grey">
+      </li>
+      <li>
+        <p>Once your assistant is created, click on <strong>Add an actions or dialog skill</strong>, to add a skill to your assistant:</p>
+        <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/3Addskill.png" style="border: solid 1px grey">
+      </li>
+      <li>
+        <p>Click on <strong>Use sample skill</strong> and select <strong>Customer Case Sample Skill</strong></p>
+        <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/4Sampleskill.png" style="border: solid 1px grey">
+      </li>
+    </ol>
+    <blockquote>
+      <p>To get your Assistant ID, you need to go to your <strong>Assistant settings</strong>
+        <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/5AssistantSettings.png" style="border: solid 1px grey">
+      </p>
+    </blockquote>
+    <blockquote>
+      <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/6AssistantAPI.png" style="border: solid 1px grey">
+    </blockquote>
+    <p>Now, you have successfully loaded the Customer Care sample skill.</p>
+    <h3>Task 2</h3>
+    <ol>
+      <li>
+        <p>Download the <a href="https://github.com/ibm-developer-skills-network/cb106-AIWatsonLab/raw/master/audio_dialogs.zip" target="_blank" rel="external">zip file</a> in your local folder and extract it. It has a few sample dialogs you can upload and get response for.</p>
+      </li>
+      <li>
+        <p>The code has been done for you already.</p>
+      </li>
+    </ol>
+    <pre><code class="hljs language-awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/ibm-developer-skills-network/</span>cb106-AIWatsonLab.git
+</code></pre>
+    <p></p>
+    <pre><code class="hljs language-apache"><span class="hljs-attribute">cd</span> cb<span class="hljs-number">106</span>-AIWatsonLab
+</code></pre>
+    <p></p>
+    <p>We need to import the right modules for this lab. All the modules have been included in the <code>requirements.txt</code>. In the file explorer look through the requirement to check the same.</p>
+    <pre><code class="hljs language-basic">pip3 install -r requi<span class="hljs-comment">rements.txt</span>
+</code></pre>
+    <p></p>
+    <p>You will see .env in the ibmservices folder. Fill up the values for the API keys from the services you have created.</p>
+    <blockquote>
+      <p>Note: Pass the values within double quotes.</p>
+    </blockquote>
+    <pre><code class="hljs language-ini"><span class="hljs-attr">tts_api</span>=<span class="hljs-string">"The TextToSpeech API Key"</span>
+<span class="hljs-attr">tts_url</span>=<span class="hljs-string">"The TextToSpeech URL"</span>
+<span class="hljs-attr">stt_api</span>=<span class="hljs-string">"The SpeechToText API Key"</span>
+<span class="hljs-attr">stt_url</span>=<span class="hljs-string">"The SpeechToText URL"</span>
+<span class="hljs-attr">assistant_api</span>=<span class="hljs-string">"The Watson Assistant API Key"</span>
+<span class="hljs-attr">assistant_url</span>=<span class="hljs-string">"The Watson Assistant URL"</span>
+<span class="hljs-attr">assistant_id</span>=<span class="hljs-string">"The Watson Assistant Id"</span>
+</code></pre>
+    <blockquote>
+      <p>To get your TextToSpeech service API Key and URL, open the TestToSpeech service from your IBM Cloud <strong>Resource list</strong>:</p>
+    </blockquote>
+    <blockquote>
+      <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/TTS.png" style="border: solid 1px grey">
+    </blockquote>
+    <blockquote>
+      <p>Similarly, to get your SpeechToText service API Key and URL, open the SpeechToText service from your IBM Cloud <strong>Resource list</strong>:</p>
+    </blockquote>
+    <blockquote>
+      <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/STT.png" style="border: solid 1px grey">
+    </blockquote>
+    <blockquote>
+      <p>Similarly, to get your Watson Assistant service API Key and URL, open the Watson Assistant service from your IBM Cloud <strong>Resource list</strong>:</p>
+    </blockquote>
+    <blockquote>
+      <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/WA_API.png" style="border: solid 1px grey">
+    </blockquote>
+    <blockquote>
+      <p>The steps to get your Assistant ID, has been given in Task 1.</p>
+    </blockquote>
+    <p>Start the server.</p>
+    <pre><code class="hljs language-vim"><span class="hljs-keyword">python3</span> server.<span class="hljs-keyword">py</span>
+</code></pre>
+    <p>Click on <code>Launch Application</code> and connect to port <code>8080</code>.</p>
+    <p>You should see this page open up.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/request.png" style="border: solid 1px grey">
+    <p>You may recall the flow of the question and response as explained in the beginning of this document.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/FlowOfDialog.png" style="border: 1px solid grey">
+    <p>You can record some mp3/wav files with the questions that are supported by your chatbot. Some questions have been provided in the zip file. You can upload the dialogs and listen to the response that's returned.</p>
+    <p>The response is returned in mp3 format.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%204/images/response.png" style="border: solid 1px grey">
+    <h3>(Optional) Deploy the application in IBM Cloud</h3>
+    <blockquote>
+      <p>The deployment will work only if the Cloud Foundry service is available.</p>
+    </blockquote>
+    <ol>
+      <li>Let's sign into IBM Cloud in the terminal using the following command:</li>
+    </ol>
+    <pre><code class="hljs language-bash">ibmcloud login -u email
+</code></pre>
+    <p></p>
+    <blockquote>
+      <p>Replace <code>email</code> with the email you used to sign up for IBM Cloud. You will be asked for password; type your password and you will be logged in.</p>
+    </blockquote>
+    <ol start="2">
+      <li>Set the resource-group to <code>Default</code>.</li>
+    </ol>
+    <pre><code class="hljs language-fortran">ibmcloud <span class="hljs-keyword">target</span> -g <span class="hljs-keyword">Default</span>
+</code></pre>
+    <p></p>
+    <ol start="3">
+      <li>Run the following command to get details of your IBM cloud account.</li>
+    </ol>
+    <pre><code class="hljs language-ebnf"><span class="hljs-attribute">ibmcloud account orgs</span>
+</code></pre>
+    <p></p>
+    <ol start="4">
+      <li>The next step is to target CloudFoundry as follows:</li>
+    </ol>
+    <pre><code class="hljs language-vim">ibmcloud target --<span class="hljs-keyword">cf</span>-api http<span class="hljs-variable">s:</span>//api.REGION.<span class="hljs-keyword">cf</span>.cloud.ibm.<span class="hljs-keyword">com</span> -r REGION -<span class="hljs-keyword">o</span> ACCOUNTOWNER
+</code></pre>
+    <p></p>
+    <blockquote>
+      <p>The REGION would be eu-gb for London, us-south for Dallas or other regions depending where you have signed infrom. The ACCOUNTOWNER is your email id.</p>
+    </blockquote>
+    <ol start="6">
+      <li>If you are running this code for the first time and you don't have an account space created, run the following command to create an account space. It has been named chatbot_withdialogs. You can give it any name you want.</li>
+    </ol>
+    <pre><code class="hljs language-livecodeserver">ibmcloud account <span class="hljs-literal">space</span>-<span class="hljs-built_in">create</span> chatbot_withdialogs
+</code></pre>
+    <ol start="7">
+      <li>We should now set the space that we just created as the target space for our application deployment.</li>
+    </ol>
+    <pre><code class="hljs language-aspectj">ibmcloud <span class="hljs-keyword">target</span> -s chatbot_withdialogs
+</code></pre>
+    <ol start="8">
+      <li>Before we deploy the application, let's change the name to something unique across IBM in the <code>manifest.yml</code> file.</li>
+    </ol>
+    <pre><code class="hljs language-yaml"><span class="hljs-meta">---</span>
+<span class="hljs-attr">applications:</span>
+ <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">&#x3C;uniquename>_chatbotwithdialogs_app</span>
+   <span class="hljs-attr">random-random:</span> <span class="hljs-literal">true</span>
+   <span class="hljs-attr">memory:</span> <span class="hljs-string">64M</span>
+</code></pre>
+    <ol start="9">
+      <li>We can now deploy our application with <code>ibmcloud </code>as follows. Make sure you are in the directory where the <code>manifest.yml</code> file is present.</li>
+    </ol>
+    <pre><code class="hljs language-bash">ibmcloud app push
+</code></pre>
+    <p></p>
+    <p>The application would be deployed and you will see and output similar to what you see in the image below. Copy the URL of your application.</p>
+    <blockquote>
+      <p><strong>Trouble Shooting</strong> - If there is any error in deploying the run <code>ibmcloud cf logs &#x3C;your_app_name> --recent</code> and check what's wrong and then make correction and repeat the process.</p>
+    </blockquote>
+    <p><strong>Congratulations!</strong> We hope you've deployed an application to Cloud Foundry on IBM Cloud using the command line interface.</p>
+    <h2>Author(s)</h2>
+    <p>Lavanya</p>
+    <h2>Changelog</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Version</th>
+          <th>Changed by</th>
+          <th>Change Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2021-06-16</td>
+          <td>1.0</td>
+          <td>Lavanya</td>
+          <td>Create new Lab</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2></h2>
+    <h3 align="center">© IBM Corporation 2020. All rights reserved.</h3>
+    <h3></h3>
+    <script>window.addEventListener('load', function() {
+snFaculty.inject();
+});</script>
+    <script src="https://skills-network-assets.s3.us.cloud-object-storage.appdomain.cloud/scripts/inject.43989f87.js"></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css">
+  </head>
+  <body>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/IDSNlogo.png" width="300">
+    <h1>Lab 2: Creating a Discovery Collection (1 hour)</h1>
+    <p>Objective for Exercise:</p>
+    <ul>
+      <li>How to use a Watson Discovery Service</li>
+      <li>How to upload Documents to a new Discovery collection.</li>
+    </ul>
+    <p>Since you're taking this course you should already be familiar with Watson Assistant. What you might not be familiar with is Watson Discovery. In Lab 1 you created a Watson Discovery service instance in your IBM Cloud account (if you haven't, go back and consider doing that now); here we'll create a Discovery Collection and, in the process, learn more about this powerful insight tool.</p>
+    <h3>Explore the default News Collection</h3>
+    <p>We'll start off by launching the Discovery tool and exploring the default News collection.</p>
+    <ol>
+      <li>From your Dashboard, <strong>click on the Discovery service you created</strong> in Lab 1. (Click on the name, not the icon next to it.)</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/1.png" width="600">
+    <ol start="2">
+      <li>A new page will appear. <strong>Click on <em>Launch Watson Discovery</em></strong>. You should see the Manage Data section of the tool.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/2.png" width="600">
+    <ol start="3">
+      <li>
+        <p>You'll notice that by default the Watson Discovery News collection has been pre-loaded for you. The Upload your own data and Connect a data source buttons allow you to work with your own data. For the time being, let's explore the News data collection. Go head and <strong>click on the <em>Watson Discovery News tile</em></strong>.</p>
+      </li>
+      <li>
+        <p>You should see statistical details about the collection, similarly to the image below.</p>
+      </li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/3.png" width="600">
+    <ol start="5">
+      <li>Select one of the pre-made queries on the right and click Run. Any query of your choice will do. You should see a result somewhat similar to the one shown in figure (only the query might be a different one, depending on which one you selected).</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/4.png" width="600">
+    <p>You'll notice that the third icon on the left (the magnifying glass icon) is now selected, since we are no longer within Manage Data but rather in the Query section.</p>
+    <p>If you click + Search for documents, you'll also notice that there are three ways to query data: 1) Using natural language; 2) Using the Discovery Query Language, which is what the pre-made queries use; 3) Using visual mode.</p>
+    <p>
+      We won't be spending much time learning the intricacies of the Discovery Query Language, since our chatbot will simply pass the natural language queries from the use to the Discovery service to retrieve relevant articles ranked in order of relevancy. However, feel free to spend some time analyzing these sample queries which use the Discovery Language, as well as reading the
+      <a href="https://cloud.ibm.com/docs/discovery?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01&#x26;topic=discovery-query-reference" target="_blank" rel="external">relevant documentation.</a>
+    </p>
+    <p>On the right of the page, you'll see the output of the query over two tabs: A human-readable Summary tab, and a JSON output tab(which you would work with when querying the service through its API).</p>
+    <p>Expanding the relevant documents returned by the query, will highlight how they are relevant to the query. For example, in my screenshot above, you'll notice that the query is asking for AI acquisitions in the news, so the top result (among 104 matching document) is one that features the word acquire in the title, URL, and text fields. Watson uses its AI capabilities to enrich the raw documents that are uploaded in Discovery. So much of the magic lies in its ability to classify and tag the documents so that they are easy to query. In this case, my top result for this query, has a positive sentiment, and was deemed as relevant to the concept of Artificial Intelligence by Watson.</p>
+    <p>Feel free to explore a bit more on your own, perhaps altering the query yourself or by trying a natural language query. When you're ready, move on to the next section where we'll create a collection of our own, which is much more relevant to the chatbot that we'll build.</p>
+    <h3>Create a Coursera course catalog collection</h3>
+    <p>In the next module, we'll create a barebone student advisor chatbot for Coursera. It should be able to, among other functions, point people to courses relevant to the topic the user is looking for. So when the user asks, "Do you have courses on Python?" the chatbot should be able to reply with a list of courses.</p>
+    <p>The problem with the traditional approach of hardcoding courses in the node responses within Watson Assistant is that Coursera has thousands of courses. It's just not feasible to manually add all of them to a dialog.</p>
+    <p>So, instead, we'll leverage Discovery and connect it to Watson Assistant. But before we can do all that, we'll need to have a Coursera course collection uploaded within Discovery. Let's do that now.</p>
+    <h3>Two ways to upload data</h3>
+    <p>There are two main ways to upload data to Discovery: uploading documents and connecting to a data source. If you head over to the Manage Data section of your Discovery instance, you'll see the two corresponding buttons.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/5.png" width="600">
+    <p>In case you're curious about which data sources are available, you can click on that second button and you see a list of services similar to the one below:</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/6.png" width="600">
+    <p>The most relevant source here would be Web Crawl, which allows us to specify a URL and the collection will store each page connected to that URL as a document. You can even specify how deep the crawler should go (e.g., how many links it should follow before stopping).</p>
+    <p>For the sake of showing how to import documents, and to spare Coursera's servers from thousands of people all crawling their course catalog, I prepared a collection of 500 courses of theirs. The reason why I limited it is that your Lite free account is limited to 1000 documents a month, and you'll need more documents for a second collection during your project in Module 6.</p>
+    <p>Let's see how to upload them.</p>
+    <h3>Upload Coursera course documents</h3>
+    <blockquote>
+      <p><strong>NOTE:</strong> In order to save your upload time, we have divided the data into two parts, one with 5 documents and other with remaining 495 documents.</p>
+    </blockquote>
+    <ol>
+      <li>
+        <p><strong>Download the following zip file</strong> containing a list of courses as JSON files and <strong>unzip it</strong>.</p>
+        <p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/data/5-Coursera-courses.zip" target="_blank" rel="external">5-coursera-courses.zip</a></p>
+      </li>
+      <li>
+        <p>From the <em>Manage Data</em> section of your Discovery instance, <strong>select <em>Upload your own data</em></strong>. You'll be asked to give a name to your collection. <strong>Call it Coursera Courses</strong> or something similar and <strong>click Create</strong>.</p>
+      </li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/manage.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/naming.png" width="600">
+    <ol start="3">
+      <li>You'll be prompted to upload documents. <strong>Click on the upload icon and add the files you extracted</strong>. You can use CMD+a or CTRL+a to select all of them at once in the upload dialog. Alternatively, you can simply drag and drop the files on the page.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/upload.png" width="600">
+    <blockquote>
+      <p>NOTE: Processing the data will take a few minutes. If you see Errors and warnings during the process, simply ignore the them. It gives a warning because the course document contains a reserved field of id.</p>
+    </blockquote>
+    <pre><code class="hljs language-json">{
+  <span class="hljs-attr">"courseType"</span>:<span class="hljs-string">"v2.ondemand"</span>,
+  <span class="hljs-attr">"description"</span>:<span class="hljs-string">"Gamification is the application of game elements and digital game design techniques to non-game problems, such as business and social impact challenges. This course will teach you the mechanisms of gamification, why it has such tremendous potential, and how to use it effectively. For additional information on the concepts described in the course, you can purchase Professor Werbach's book For the Win: How Game Thinking Can Revolutionize Your Business in print or ebook format in several languages."</span>,
+  <span class="hljs-attr">"id"</span>:<span class="hljs-string">"69Bku0KoEeWZtA4u62x6lQ"</span>,
+  <span class="hljs-attr">"slug"</span>:<span class="hljs-string">"gamification"</span>,
+  <span class="hljs-attr">"instructorIds"</span>:[
+     <span class="hljs-string">"226710"</span>
+  ],
+  <span class="hljs-attr">"specializations"</span>:[
+
+  ],
+  <span class="hljs-attr">"partnerIds"</span>:[
+     <span class="hljs-string">"6"</span>
+  ],
+  <span class="hljs-attr">"name"</span>:<span class="hljs-string">"Gamification"</span>
+}
+
+</code></pre>
+    <p>The most important fields for us are name, slug, and description. Name is the title of the course, slug the path to the course that we'll append to <em><a href="https://www.coursera.org/learn/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">https://www.coursera.org/learn/</a></em> to generate the course URL, and description gives Watson Discovery enough info to determine the relevance of the user query to the course content.</p>
+    <p>Remember, Discovery is only as good as the data you feed it.</p>
+    <ol start="4">
+      <li>Once the import is completed, you should see something similar to the image below. The number of imported documents is reported, as well as the fields that were identified by Watson. Name, slug, and description were identified correctly, so we are good as far as we are concerned.</li>
+    </ol>
+    <blockquote>
+      <p><em>Don't worry if you see a warning about the data containing an id. It just means that Discovery has already a protected id field, so the one we uploaded in our JSON will be ignored.</em></p>
+    </blockquote>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/import.png" width="600">
+    <ol start="5">
+      <li>You'll notice how there are several enrichments available. <strong>Click on Add enrichments</strong>.</li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/en1.png" width="600">
+    <ol start="6">
+      <li>Enrichments tell Watson what kind of analysis we want to run on the data we uploaded, and then store that information as metadata attached to our raw content.</li>
+    </ol>
+    <p>You'll see a enrichment added to the text field already. Delete the previosly added enrichment field by clicking on the '-' sign on the right side of the enrichment field.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/deltext.PNG" width="600">
+    <p>Now, <strong>Select description</strong> as the field to enrich, and <strong>then click on + Add enrichments</strong> as shown in figure.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/8.png" width="600">
+    <ol start="7">
+      <li>
+        <p>You'll see a series of possible enrichments, including keyword extraction, sentiment analysis, concept tagging, and more. Spend some time familiarizing yourself with what these enrichments do by clicking on the Learn more under each enrichment.</p>
+      </li>
+      <li>
+        <p>Once you have a general understanding of what these enrichments do, <strong>click the <em>Add</em> button for the <em>Keyword Extraction</em> and <em>Concept Tagging</em> enrichments.</strong></p>
+      </li>
+      <li>
+        <p>Once done, close the <em>Add enrichments</em> window to return to the main screen, as shown below.</p>
+      </li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/9.png" width="600">
+    <p>By the way, aside from enriching fields, you can also identify/map fields to the data if the document you uploaded was unstructured. In our case, we used JSON which is already structured, so the <em>Identify fields</em> tab is not useful to us here.</p>
+    <p>The <em>Manage fields</em> tab allows us to turn off fields that we don't want indexed. This is more important when you have lots of irrelevant fields. In our case, we can leave all fields on by default or feel free to turn off some as an exercise, but preserve name, slug, and description.</p>
+    <p>When you're done exploring the data configuration section, <strong>click on Apply changes to collection</strong>.</p>
+    <p><strong>If you get this popped up.</strong> Please upload the 5 documents again. Re-uploading the duplicate documents will simply add enrichments.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/10.png" width="600">
+    <p>Please navigate to Overview tab of Courses collection to check whether enrichments are properly added to the collection.</p>
+    <p>This screenshot below is an example of missing enrichments in the data.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/noen.PNG" width="600">
+    <p>If enrichment is not added, please start the process of adding enrichment again.</p>
+    <p>It should show <strong>added 2 enrichments to your data</strong> like below screenshot if enrichments are properly added to the collection.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/enadded.PNG" width="600">
+    <p>If you have successfully uploaded 5 documents and enrichment is added to them properly then you are all set to upload the remaining 495 documents.</p>
+    <p><strong>Uploading the remaining documents</strong></p>
+    <ol>
+      <li>
+        <p>You need to click on the upload button in the same collection to upload the remaining documents as you uploaded 5 documents earlier. You can download the remaining date from the below link:</p>
+        <p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/data/495-Coursera%20Courses.zip" target="_blank" rel="external">495-coursera-courses.zip</a></p>
+      </li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/re495.PNG" width="600">
+    <ol start="2">
+      <li>Once you click on upload you'll be prompted to upload documents. <strong>Click on the upload icon and add the files you extracted</strong>. You can use CMD+a or CTRL+a to select all of them at once in the upload dialog. Alternatively, you can simply drag and drop the files on the page.</li>
+    </ol>
+    <blockquote>
+      <p>NOTE: Processing the data will take a few minutes. If you see Errors and warnings during the process, simply ignore the them. It gives a warning because the course document contains a reserved field of id.</p>
+    </blockquote>
+    <p>After the documents are uploaded, you do not need to add enrichments again to these documents as they will be auto enriched and you should see something like this on your screen:</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/enadded2.PNG" width="600">
+    <p>Please make a note of its collection ID and environment ID as it will be used in the coming labs.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/colid.PNG" width="600">
+    <ol>
+      <li>
+        <p>At this point we are all set. As a sanity test, click on the <strong>query icon</strong> on the very left and then <strong>click on <em>Search for documents</em></strong>.</p>
+      </li>
+      <li>
+        <p>You'll be prompted to enter a natural language query. <strong>Try <em>"python"</em> and click <em>Run</em> query</strong>. The first 10 results will be displayed in the Summary panel. These are not randomly selected out of the list of matching results. These are ranked based on relevance to the query. In fact, when I ran it, all top 10 results where highly relevant Python courses.</p>
+      </li>
+    </ol>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%202-coursera/images/13.png" width="600">
+    <p>This is just a simple query of course, but Watson Discovery is capable of producing highly relevant results for more elaborate queries as well. And when you need really complex, precise queries in your applications, you can always rely on programming the queries with the Discovery Query Language.</p>
+    <h2>Author(s)</h2>
+    <p><a href="https://www.linkedin.com/in/antoniocangiano/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">Antonio Cangiano</a></p>
+    <h2>Contributor(s)</h2>
+    <p><a href="">Anamika Agarwal</a></p>
+    <h2>Changelog</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Version</th>
+          <th>Changed by</th>
+          <th>Change Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2020-09-16</td>
+          <td>2.0</td>
+          <td>Shubham</td>
+          <td>Migrated Lab to Markdown and added to course repo in GitLab</td>
+        </tr>
+        <tr>
+          <td>2021-06-22</td>
+          <td>2.1</td>
+          <td>Anamika</td>
+          <td>Updated Instructions</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2></h2>
+    <h3 align="center">© IBM Corporation 2020. All rights reserved.</h3>
+    <h3></h3>
+    <script>window.addEventListener('load', function() {
+snFaculty.inject();
+});</script>
+    <script src="https://skills-network-assets.s3.us.cloud-object-storage.appdomain.cloud/scripts/inject.43989f87.js"></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+  </body>
+</html>

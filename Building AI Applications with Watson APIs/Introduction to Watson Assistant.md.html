@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css">
+  </head>
+  <body>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/IDSNlogo.png" width="300">
+    <h2>Introduction to Watson Assistant (30 min)</h2>
+    <p>In the next lab you will be working on creating a Student Advisor Chatbot. So, before you move on to the next lab we would like to introduce you to the basic terminology/concepts of the Watson Assistant which will help you in understanding the next lab better.</p>
+    <p>We assume that you already have completed the previous course: Building AI Powered Chatbots Without Programming. However, even if not then this reading article will take you through some of the main concepts that you will be dealing with.</p>
+    <p><strong>What is an Assistant?</strong></p>
+    <p>An assistant is a cognitive bot to which you add skills that enable it to interact with your customers in useful ways.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/Step1.png" width="600" style="border: solid 1px grey; padding-left=20px">
+    <p>In the previous lab(Part-3) you already created a Watson Assistant Instance. So, now it's time to add some Dialog Skills to the chatbot.</p>
+    <p><strong>What is a Dialog Skill?</strong></p>
+    <p>A dialog skill is a container for the artifacts that define the flow of a conversation that your assistant can have with your customers. A dialog skill uses Watson natural language processing and machine learning technologies to understand user questions and requests, and respond to them with answers that are authored by you.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/Step5.png" width="600" style="border: solid 1px grey; padding-left=20px">
+    <p>After, creating your Dialog SKills you wil be adding intents to your Watson Assistant.</p>
+    <p><strong>Intents:</strong></p>
+    <p>Intents are purposes or goals that are expressed in a customer's input, such as answering a question or processing a bill payment. By recognizing the intent expressed in a customer's input, the Watson Assistant service can choose the correct dialog flow for responding to it.</p>
+    <p>You can create your own intents or can use the built-in intents.</p>
+    <p><strong>Content Catalogs</strong> provides an easy way to add common intents to your Watson Assistant dialog skill. Intents you add from the catalog are meant to provide a starting point. Add to or edit the catalog intents to tailor them for your use case.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%203-coursera/images/Step4.png" width="600" style="border: solid 1px grey; padding-left=20px">
+    <p>Now, next we add some entities to our Watson Assistant.</p>
+    <p><strong>Entities:</strong></p>
+    <p>Entities represent information in the user input that is relevant to the user's purpose.</p>
+    <p>If intents represent verbs (the action a user wants to do), entities represent nouns (the object of, or the context for, that action). For example, when the intent is to get a weather forecast, the relevant location and date entities are required before the application can return an accurate forecast.</p>
+    <p>When you add a dialog to your dialog skill, the following dialog nodes are added to it automatically:</p>
+    <p><strong>1. Welcome:</strong> Defines how the assistant greets the user and starts the conversation.</p>
+    <p><strong>2. Anything else:</strong> What the assistant says when a customer's request cannot be satisfied by any of the defined intents.</p>
+    <p>Now, you can start adding your nodes to the chatbot as per your requirement. After you have finished creating your nodes, you can test the chatbot through the <strong>Try It Out</strong> pane and see if it recognizes your intents as you expect.</p>
+    <p><strong>What's a...</strong></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Terms</th>
+          <th>Definition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Action</td>
+          <td>An action that you add to an actions skill represents a discrete task or question that your assistant is designed to help customers with.</td>
+        </tr>
+        <tr>
+          <td>Assistant</td>
+          <td>Container for your skills. You add skills to an assistant, and then deploy the assistant when you are ready to start helping your customers.</td>
+        </tr>
+        <tr>
+          <td>Condition</td>
+          <td>Logic that is defined in the If assistant recognizes section of a dialog node that determines whether the node is processed. The dialog node conditions is equivalent to an If statement in If-Then-Else programming logic.</td>
+        </tr>
+        <tr>
+          <td>Content catalog</td>
+          <td>A set of prebuilt intents that are categorized by subject, such as customer care. You can add these intents to your skill and start using them immediately. Or you can edit them to complement other intents that you create. Learn more.</td>
+        </tr>
+        <tr>
+          <td>Context variable</td>
+          <td>A variable that you can use to collect information during a conversation, and reference it later in the same conversation. For example, you might want to ask for the customer's name and then address the person by name later on. A context variable is used by the dialog skill. Learn more.</td>
+        </tr>
+        <tr>
+          <td>Dialog</td>
+          <td>The component where you build the conversation that your assistant has with your customers. For each defined intent, you can author the response your assistant should return.</td>
+        </tr>
+        <tr>
+          <td>Digression</td>
+          <td>A feature that gives the user the power to direct the conversation. It prevents customers from getting stuck in a dialog thread; they can switch topics whenever they choose.</td>
+        </tr>
+        <tr>
+          <td>Disambiguation</td>
+          <td>A feature that enables the assistant to ask customers to clarify their meaning when the assistant isn't sure what a user wants to do next.</td>
+        </tr>
+        <tr>
+          <td>Entity</td>
+          <td>Information in the user input that is related to the user's purpose. An intent represents the action a user wants to do. An entity represents the object of that action.</td>
+        </tr>
+        <tr>
+          <td>Integrations</td>
+          <td>Ways you can deploy your assistant to existing platforms or social media channels.</td>
+        </tr>
+        <tr>
+          <td>Intent</td>
+          <td>The goal that is expressed in the user input, such as answering a question or processing a bill payment.</td>
+        </tr>
+        <tr>
+          <td>Message</td>
+          <td>A single turn within a conversation that includes a single call to the /message API endpoint and its corresponding response.</td>
+        </tr>
+        <tr>
+          <td>Preview</td>
+          <td>Embeds your assistant in a chat window that is displayed on an IBM-branded web page. From the preview, you can test how a conversation flows through any and all skills that are attached to your assistant, from end to end.</td>
+        </tr>
+        <tr>
+          <td>Response</td>
+          <td>Logic that is defined in the Assistant responds section of a dialog node that determines how the assistant responds to the user. When the node's condition evaluates to true, the response is processed. The response can consist of an answer, a follow-up question, a webhook that sends a programmatic request to an external service, or slots which represent pieces of information that you need the user to provide before the assistant can help. The dialog node response is equivalent to a Then statement in If-Then-Else programming logic.</td>
+        </tr>
+        <tr>
+          <td>Skill</td>
+          <td>Does the work of the assistant. A dialog skill has the training data and dialog that your assistant uses to chat with customers. An actions skill is a new way to build a conversation. Actions offer step-by-step flows for a conversations and are made so that anybody can build them. A search skill is configured to search the appropriate external data sources for answers to customer questions.</td>
+        </tr>
+        <tr>
+          <td>Skill Version</td>
+          <td>Versions are snapshots of a skill that you can create at key points during the development lifecycle. You can deploy one version to production, while you continue to make and test improvements that you make to another version of the skill.</td>
+        </tr>
+        <tr>
+          <td>Slots</td>
+          <td>A special set of fields that you can add to a dialog node that enable the assistant to collect necessary pieces of information from the customer. For example, the assistant can require a customer to provide valid date and location details before it gets weather forecast information on the customer's behalf.</td>
+        </tr>
+        <tr>
+          <td>Step</td>
+          <td>A step that you add to an action represents a single interaction or exchange of information with a customer, a turn in the conversation.</td>
+        </tr>
+        <tr>
+          <td>System Entities</td>
+          <td>Prebuilt entities that recognize references to common things like dates and numbers. You can add these to your skill and start using them immediately.</td>
+        </tr>
+        <tr>
+          <td>Try It Out</td>
+          <td>A chat window that you use to test as you build. For example, from the dialog skill's "Try it out" pane, you can mimic the behavior of a customer and enter a query to see how the assistant responds. You can test only the current skill; you cannot test your assistant and all attached skills from end to end</td>
+        </tr>
+        <tr>
+          <td>Variable</td>
+          <td>A variable is data that a customer shares with the assistant, which is collected and saved so it can be referenced later. In an actions skill, you can collect action and session variables.</td>
+        </tr>
+        <tr>
+          <td>Web Chat</td>
+          <td>An integration that you can use to embed your assistant in your company website.</td>
+        </tr>
+        <tr>
+          <td>Webhook</td>
+          <td>A mechanism for calling out to an external program during a conversation. For example, your assistant can call an external service to translate a string from English to French and back again in the course of the conversation.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Thanks for reading!</p>
+    <h2>Changelog</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Version</th>
+          <th>Changed by</th>
+          <th>Change Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2021-06-17</td>
+          <td>1.0</td>
+          <td>Anamika</td>
+          <td>Reading section created</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2></h2>
+    <h3 align="center">© IBM Corporation 2020. All rights reserved.</h3>
+    <h3></h3>
+    <script>window.addEventListener('load', function() {
+snFaculty.inject();
+});</script>
+    <script src="https://skills-network-assets.s3.us.cloud-object-storage.appdomain.cloud/scripts/inject.43989f87.js"></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+  </body>
+</html>

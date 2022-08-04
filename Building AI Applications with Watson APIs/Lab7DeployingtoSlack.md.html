@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/default.min.css">
+  </head>
+  <body>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/IDSNlogo.png" width="200" height="200">
+    <h2>Lab 7: Deploying to Slack (1h)</h2>
+    <p>Objective for Exercise:</p>
+    <ul>
+      <li>How to integrate the basic chatbot with Slack.</li>
+    </ul>
+    <h3>Deploying Your Chatbot On Slack</h3>
+    <p>
+      Slack is a communication tool, typically used by people working in a
+      team. It can also be a channel for you to connect with friends, family
+      or anyone that you want to share information with. You can improve the
+      workflow in your team or set reminders of important events with your
+      friends and family by deploying chatbots on Slack.
+    </p>
+    <p>For this lab you will integrate our chatbot with Slack.</p>
+    <h3>CREATE A SLACK APP</h3>
+    <p>1. Head over to <a href="https://slack.com/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">Slack.com</a>, <strong>click on
+the <em>Try Slack</em> button,</strong> then <strong>click on Create a Slack Workspace.</strong></p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/26.png" width="600">
+    <p>
+      2. Next, <strong>enter your email address</strong> and <strong>click on
+the <em>Confirm</em> button</strong>. You might be asked to enter a confirmation code
+      that will be sent to the email address you specified.
+    </p>
+    <p>
+      3. Specify a team and project name of choice. Feel free to skip
+      inviting teammates.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/27.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/28.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/29.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/30.png" width="600">
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/31.png" width="600">
+    <p>
+      Now that we have a Slack workspace and channel, we need to proceed to
+      create a Slack App to use to communicate with our existing chatbot.
+    </p>
+    <p>
+      4. Check your email to find the URL of your slack as shown in the
+      figure below.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/32.png" width="600">
+    <p>
+      5. Sign into your slack workspace with the following
+      link: <a href="https://slack.com/signin?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01&#x26;redir=%2Fapi%2Fapps" target="_blank" rel="external">https://slack.com/signin?redir=/api/apps</a>. <strong>Enter
+your URL</strong> (minus the .slack.com part) and <strong>click <em>Continue</em></strong>.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/33.png" width="600">
+    <p>6. Once you are signed in, <strong>click on <em>Create an App</em>.</strong></p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/34.png" width="600">
+    <p>
+      7. Give your app a name and specify the workspace that you want to
+      deploy this app on. Then <strong>click on <em>Create</em> App</strong>.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/35.png" width="600">
+    <h3>ADD PERMISSIONS</h3>
+    <p>
+      Now that we have a Slack App (e.g., <em>Slack Chatbot Demo</em>), we need to
+      ensure that the chatbot will have the right permission.
+    </p>
+    <p>
+      1. <strong>Click on <em>App Home</em> in the sidebar</strong> and then scroll to
+      the <em>Scopes</em> section. <strong>Click on Review Scopes to Add.</strong>
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/36.png" width="600">
+    <p>2. Scroll to scopes section. You'll want to <strong>click on <em>Add OAuth
+Scope</em> button under <em>Bot Token Scopes</em></strong> as shown in figure.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/37.png" width="600">
+    <p>
+      3. <strong>Select <em>app_mentions:read</em>.</strong> The new scope will be added as shown
+      in the figure below. This permission enables the bot to detect mentions
+      from Slack users.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/38.png" width="600">
+    <p>
+      4. <strong>Repeat the process</strong> of clicking on <em>Add an OAuth Scope</em> under <em>Bot
+Token Scopes</em>, to <strong>add the following
+permissions: <em>chat:write</em>, <em>im:history</em>, and <em>im:read</em>.</strong> Once you are
+      done, the list will be shown as seen in the image below.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/39.png" width="600">
+    <p>
+      5. <strong>Click on <em>Basic Information</em></strong> in the left sidebar. Then copy
+      and <strong>make note of your <em>Verification Token</em></strong>. We'll need this
+      information when integrating Slack within Watson Assistant.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/40.png" width="600">
+    <p>6. Now we need to install our Slack app within our workspace. <strong>Click
+on <em>OAuth &#x26; Permissions</em></strong> in the left sidebar, then <strong>click on <em>Install
+App to Workspace</em></strong>.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/41.png" width="600">
+    <p>7. <em><strong>Click on Allow</strong></em> when asked to confirm your authorization.</p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/42.png" width="600">
+    <p>
+      8. <strong>Copy and make note of the <em>Bot User OAuth Access Token</em></strong> that will
+      be provided to you.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/43.png" width="600">
+    <h3>INTEGRATE SLACK WITHIN WATSON ASSISTANT</h3>
+    <p>
+      Now that we have the <em>Verification Token</em>, and <em>Bot User OAuth Access
+Token</em> for our Slack app, we can proceed to add a Watson Assistant
+      integration for Slack.
+    </p>
+    <p>
+      1. From the Student Advisor Chatbot assistant within Watson
+      Assistant, <strong>click on <em>Add integration</em></strong> - much like we did in the
+      previous lab - but this time <strong>select <em>Slack</em></strong>.
+    </p>
+    <p>2. Scroll to Step 2 on the page, and <strong>paste your <em>Verification
+Token</em> in the <em>Verification token</em> input field.</strong></p>
+    <p>
+      3. <strong>Paste your <em>Bot User OAuth Access Token</em></strong> (that you made note
+      of, earlier) <strong>in both the <em>OAuth access token</em> and <em>Bot user OAuth
+access token</em> input fields.</strong>
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/44.png" width="600">
+    <p>4. Scroll to Step 3 on the page, and <strong>click on the <em>Generate request
+URL</em> button.</strong></p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/45.png" width="600">
+    <p>
+      5. This will generate a URL that we'll need to provide to Slack. (You
+      may need to scroll back to Step 3 if the page refreshed.) <strong>Copy and
+make note of the <em>Generated request URL</em>.</strong>
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/46.png" width="600">
+    <p>
+      6. Go back to the page for your Slack App. If you closed it, you can
+      find it at the following
+      URL <a href="https://api.slack.com/apps?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">https://api.slack.com/apps</a>. In
+      the left sidebar, under the <em><strong>Features</strong></em> section <strong>click on <em>Incoming
+Webhooks</em></strong>. <strong>Turn <em>Activate Incoming Webhooks</em> on.</strong> In the warning
+      message that appears, <strong>click on <em>reinstall your app</em>.</strong>
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/47.png" width="600">
+    <p>
+      7. You'll be asked to specify a channel
+      (e.g., <em>#watson-assistant-chatbot-demo</em>). <strong>Select the one that was
+generated for you earlier on when you specified the project name.</strong>
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/48.png" width="600">
+    <p>8. Now <strong>click on <em>Event Subscriptions</em></strong> in the sidebar and <strong>switch
+on <em>Enable Events</em></strong>. Then <strong>paste the request URL you saved from Watson
+Assistant.</strong></p>
+    <p>
+      9. Next, <strong>click on <em>Subscribe to bot events</em></strong>, as shown by the arrow
+      in the figure below.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/49.png" width="600">
+    <p>
+      This will open the section that will allow you to subscribe to specific
+      events.
+    </p>
+    <p>
+      10. Click on <strong>Add Bot User Event and select the event type message.im.
+Then repeat the process to add app_mention.</strong> This will enable both
+      direct messages and mentions to trigger a response from the chatbot.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/50.png" width="600">
+    <p>Then click on <strong>Save Changes</strong>.</p>
+    <p>
+      (If the Save Changes is disabled/grey, please paste the Request URL
+      again so that Slack can validate the URL and turn the Save Changes
+      button to enabled/green.)
+    </p>
+    <p>
+      You're done! Your bot will now be available within your Slack
+      workspace. Any direct message or mention will be sent in input to your
+      Watson Assistant chatbot, and its response provided back to the user in
+      Slack.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/51.png" width="600">
+    <p>
+      The chatbot will also respond to mentions in channels, provided you
+      invite it to the given channel, after mentioning it as shown in the
+      image below.
+    </p>
+    <img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-CB0106EN-SkillsNetwork/labs/Module%205/images/52.png" width="600">
+    <h2>Author(s)</h2>
+    <p><a href="https://www.linkedin.com/in/antoniocangiano/?utm_medium=Exinfluencer&#x26;utm_source=Exinfluencer&#x26;utm_content=000026UJ&#x26;utm_term=10006555&#x26;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkCB0106ENSkillsNetwork20719128-2022-01-01" target="_blank" rel="external">Antonio Cangiano</a></p>
+    <h2>Changelog</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Version</th>
+          <th>Changed by</th>
+          <th>Change Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2020-08-27</td>
+          <td>2.0</td>
+          <td>Anamika</td>
+          <td>Migrated Lab to Markdown and added to course repo in GitLab</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2></h2>
+    <h3 align="center">© IBM Corporation 2020. All rights reserved.</h3>
+    <h3></h3>
+    <script>window.addEventListener('load', function() {
+snFaculty.inject();
+});</script>
+    <script src="https://skills-network-assets.s3.us.cloud-object-storage.appdomain.cloud/scripts/inject.43989f87.js"></script>
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+  </body>
+</html>
